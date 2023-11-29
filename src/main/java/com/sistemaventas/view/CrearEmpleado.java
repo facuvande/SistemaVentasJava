@@ -3,6 +3,8 @@ package com.sistemaventas.view;
 import com.sistemaventas.logic.Controller;
 import com.sistemaventas.logic.Rol;
 import java.util.List;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 
 public class CrearEmpleado extends javax.swing.JFrame {
@@ -154,6 +156,8 @@ public class CrearEmpleado extends javax.swing.JFrame {
         String role = cmbRole.getSelectedItem().toString();
         
         control.addUser(name, surname, dni, password, user, role);
+        mostrarMensaje("Usuario agregado con exito", "Info", "Usuario agregado");
+        this.dispose();
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void cleanForm(){
@@ -162,6 +166,20 @@ public class CrearEmpleado extends javax.swing.JFrame {
         txtPassword.setText("");
         txtSurname.setText("");
         txtUser.setText("");
+    }
+    
+    public void mostrarMensaje (String mensaje, String tipo, String titulo) {
+       JOptionPane optionPane = new JOptionPane(mensaje);
+        if (tipo.equals("Info")) {
+                optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if (tipo.equals("Error")) {
+            optionPane.setMessageType(JOptionPane.ERROR_MESSAGE);
+        }
+        JDialog dialog = optionPane.createDialog(titulo);
+        dialog.setAlwaysOnTop(true);
+        dialog.setVisible(true);
+   
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
