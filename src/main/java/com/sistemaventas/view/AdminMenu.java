@@ -5,10 +5,12 @@ import com.sistemaventas.logic.Controller;
 public class AdminMenu extends javax.swing.JFrame {
     
     Controller control = null;
+    String userLoged = null; 
     
-    public AdminMenu() {
+    public AdminMenu(String name) {
         initComponents();
         control = new Controller();
+        userLoged = name;
     }
 
     @SuppressWarnings("unchecked")
@@ -16,7 +18,7 @@ public class AdminMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        txtNameUser = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -25,12 +27,17 @@ public class AdminMenu extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jLabel1.setText("Bienvenido:");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 20, 310, 30));
+        txtNameUser.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtNameUser.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(txtNameUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 20, 310, 30));
 
         jPanel2.setBackground(new java.awt.Color(21, 30, 33));
         jPanel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -51,6 +58,11 @@ public class AdminMenu extends javax.swing.JFrame {
 
         jButton4.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
         jButton4.setText("Salir");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
         jButton5.setText("Modo vendedor");
@@ -107,6 +119,17 @@ public class AdminMenu extends javax.swing.JFrame {
         miGestion.setLocationRelativeTo(null);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        txtNameUser.setText("Bienvenid@ " + userLoged);
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        this.dispose();
+        Login miLogin = new Login();
+        miLogin.setVisible(true);
+        miLogin.setLocationRelativeTo(null);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -114,8 +137,8 @@ public class AdminMenu extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel txtNameUser;
     // End of variables declaration//GEN-END:variables
 }

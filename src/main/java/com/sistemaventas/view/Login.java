@@ -2,6 +2,8 @@ package com.sistemaventas.view;
 
 import com.sistemaventas.logic.Controller;
 import com.sistemaventas.logic.Usuario;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 
 public class Login extends javax.swing.JFrame {
@@ -147,13 +149,13 @@ public class Login extends javax.swing.JFrame {
             // Logeado
             // Administrador
             if(user.getRol().getName().equals("admin")){
-                AdminMenu viewAdmin = new AdminMenu();
+                AdminMenu viewAdmin = new AdminMenu(user.getName());
                 viewAdmin.setVisible(true);
                 viewAdmin.setLocationRelativeTo(null);
                 this.dispose();
             }
         }else{
-            // Mensaje error
+            mostrarMensaje("Usuario o contrasena incorrectos", "Error", "Error al logearse");
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
@@ -171,4 +173,19 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
+ 
+    public void mostrarMensaje (String mensaje, String tipo, String titulo) {
+       JOptionPane optionPane = new JOptionPane(mensaje);
+        if (tipo.equals("Info")) {
+                optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if (tipo.equals("Error")) {
+            optionPane.setMessageType(JOptionPane.ERROR_MESSAGE);
+        }
+        JDialog dialog = optionPane.createDialog(titulo);
+        dialog.setAlwaysOnTop(true);
+        dialog.setVisible(true);
+   
+    }
+
 }

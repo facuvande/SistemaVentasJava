@@ -3,6 +3,8 @@ package com.sistemaventas.view;
 import com.sistemaventas.logic.Controller;
 import com.sistemaventas.logic.Usuario;
 import java.util.List;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class GestionEmpleado extends javax.swing.JFrame {
@@ -133,7 +135,14 @@ public class GestionEmpleado extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
+        if(tableUsers.getSelectedRow() > -1){
+            int id = Integer.parseInt(String.valueOf(tableUsers.getValueAt(tableUsers.getSelectedRow(), 0)));
+            control.deleteUserById(id);
+            mostrarMensaje("Usuario eliminado exitosamente", "Info", "Usuario eliminado");
+            cargarTabla();
+        }else{
+            mostrarMensaje("No has seleccionado ningun usuario", "Error", "Error al eliminar");
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReloadActionPerformed
@@ -170,6 +179,20 @@ public class GestionEmpleado extends javax.swing.JFrame {
         
         // Cargamos modelo a la tabla
         tableUsers.setModel(tableModel);
+    }
+    
+    public void mostrarMensaje (String mensaje, String tipo, String titulo) {
+       JOptionPane optionPane = new JOptionPane(mensaje);
+        if (tipo.equals("Info")) {
+                optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if (tipo.equals("Error")) {
+            optionPane.setMessageType(JOptionPane.ERROR_MESSAGE);
+        }
+        JDialog dialog = optionPane.createDialog(titulo);
+        dialog.setAlwaysOnTop(true);
+        dialog.setVisible(true);
+   
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

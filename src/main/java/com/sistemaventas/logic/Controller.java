@@ -53,6 +53,10 @@ public class Controller {
         
        
     }
+    
+    public void deleteUserById(int id){
+        controllerPersis.deleteUserById(id);
+    }
 
     private int searchLastIdUser() {
         List<Usuario> miUsers = this.getUsers();

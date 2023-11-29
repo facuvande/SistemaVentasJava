@@ -2,7 +2,10 @@ package com.sistemaventas.persistence;
 
 import com.sistemaventas.logic.Rol;
 import com.sistemaventas.logic.Usuario;
+import com.sistemaventas.persistence.exceptions.NonexistentEntityException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class ControllerPersistence {
@@ -19,6 +22,14 @@ public class ControllerPersistence {
 
     public void addUser(Usuario miUsuario) {
         usuJpa.create(miUsuario);
+    }
+    
+    public void deleteUserById(int id){
+        try {
+            usuJpa.destroy(id);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ControllerPersistence.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     // Rols
