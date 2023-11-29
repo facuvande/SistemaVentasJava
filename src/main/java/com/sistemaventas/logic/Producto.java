@@ -5,8 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class Producto implements Serializable {
@@ -14,25 +12,20 @@ public class Producto implements Serializable {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     
-    private String nombre;
-    private double precio;
+    private String name;
+    private double price;
     private int stock;
-    private String codigo_barras;
-    
-    @ManyToOne
-    @JoinColumn(name="venta_id")
-    private Venta venta;
+    private String barcode;
 
     public Producto() {
     }
 
-    public Producto(int id, String nombre, double precio, int stock, String codigo_barras, Venta venta) {
+    public Producto(int id, String name, double price, int stock, String barcode) {
         this.id = id;
-        this.nombre = nombre;
-        this.precio = precio;
+        this.name = name;
+        this.price = price;
         this.stock = stock;
-        this.codigo_barras = codigo_barras;
-        this.venta = venta;
+        this.barcode = barcode;
     }
 
     public int getId() {
@@ -43,20 +36,20 @@ public class Producto implements Serializable {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public double getPrecio() {
-        return precio;
+    public double getPrice() {
+        return price;
     }
 
-    public void setPrecio(double precio) {
-        this.precio = precio;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public int getStock() {
@@ -67,21 +60,16 @@ public class Producto implements Serializable {
         this.stock = stock;
     }
 
-    public String getCodigo_barras() {
-        return codigo_barras;
+    public String getBarcode() {
+        return barcode;
     }
 
-    public void setCodigo_barras(String codigo_barras) {
-        this.codigo_barras = codigo_barras;
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
     }
+    
 
-    public Venta getVenta() {
-        return venta;
-    }
-
-    public void setVenta(Venta venta) {
-        this.venta = venta;
-    }
+    
     
     
 }

@@ -17,27 +17,28 @@ public class Venta implements Serializable {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     
-    private Date fecha_venta;
-    private int monto;
-    private boolean estado;
+    private Date date_sale;
+    private int amount;
+    private boolean state;
 
     @ManyToOne
     @JoinColumn(name="vendedor_id")
     private Usuario vendedor;
     
-    @OneToMany(mappedBy="venta")
-    private List<Producto> productos;
+    @OneToMany()
+    @JoinColumn(name="venta_id")
+    private List<Producto> listProducts;
 
     public Venta() {
     }
 
-    public Venta(int id, Date fecha_venta, int monto, boolean estado, Usuario vendedor, List<Producto> productos) {
+    public Venta(int id, Date date_sale, int amount, boolean state, Usuario vendedor, List<Producto> listProducts) {
         this.id = id;
-        this.fecha_venta = fecha_venta;
-        this.monto = monto;
-        this.estado = estado;
+        this.date_sale = date_sale;
+        this.amount = amount;
+        this.state = state;
         this.vendedor = vendedor;
-        this.productos = productos;
+        this.listProducts = listProducts;
     }
 
     public int getId() {
@@ -48,28 +49,28 @@ public class Venta implements Serializable {
         this.id = id;
     }
 
-    public Date getFecha_venta() {
-        return fecha_venta;
+    public Date getDate_sale() {
+        return date_sale;
     }
 
-    public void setFecha_venta(Date fecha_venta) {
-        this.fecha_venta = fecha_venta;
+    public void setDate_sale(Date date_sale) {
+        this.date_sale = date_sale;
     }
 
-    public int getMonto() {
-        return monto;
+    public int getAmount() {
+        return amount;
     }
 
-    public void setMonto(int monto) {
-        this.monto = monto;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
-    public boolean isEstado() {
-        return estado;
+    public boolean isState() {
+        return state;
     }
 
-    public void setEstado(boolean estado) {
-        this.estado = estado;
+    public void setState(boolean state) {
+        this.state = state;
     }
 
     public Usuario getVendedor() {
@@ -80,14 +81,13 @@ public class Venta implements Serializable {
         this.vendedor = vendedor;
     }
 
-    public List<Producto> getProductos() {
-        return productos;
+    public List<Producto> getListProducts() {
+        return listProducts;
     }
 
-    public void setProductos(List<Producto> productos) {
-        this.productos = productos;
+    public void setListProducts(List<Producto> listProducts) {
+        this.listProducts = listProducts;
     }
 
-    
     
 }

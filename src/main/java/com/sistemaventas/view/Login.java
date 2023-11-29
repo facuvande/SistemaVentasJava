@@ -1,6 +1,7 @@
 package com.sistemaventas.view;
 
 import com.sistemaventas.logic.Controller;
+import com.sistemaventas.logic.Usuario;
 
 
 public class Login extends javax.swing.JFrame {
@@ -140,6 +141,20 @@ public class Login extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         String password = txtPassword.getText();
         String username = txtUser.getText();
+        
+        Usuario user = control.Login(username, password);
+        if(user != null){
+            // Logeado
+            // Administrador
+            if(user.getRol().getName().equals("admin")){
+                AdminMenu viewAdmin = new AdminMenu();
+                viewAdmin.setVisible(true);
+                viewAdmin.setLocationRelativeTo(null);
+                this.dispose();
+            }
+        }else{
+            // Mensaje error
+        }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     

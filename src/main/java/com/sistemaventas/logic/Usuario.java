@@ -16,26 +16,30 @@ public class Usuario implements Serializable {
     @GeneratedValue(strategy=GenerationType.AUTO)
 
     private int id;
-    private String nombre;
-    private String apellido;
+    private String name;
+    private String surname;
     private String username;
+    private String password;
     private int dni;
     @ManyToOne
     @JoinColumn(name="fk_rol")
     private Rol rol;
+    
     @OneToMany(mappedBy="vendedor")
-    private List<Venta> listaVentas;
+    private List<Venta> listSales;
 
     public Usuario() {
     }
 
-    public Usuario(int id, String nombre, String apellido, int dni, Rol rol, List<Venta> listaVentas) {
+    public Usuario(int id, String name, String surname, String username, String password, int dni, Rol rol, List<Venta> listSales) {
         this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
+        this.name = name;
+        this.surname = surname;
+        this.username = username;
+        this.password = password;
         this.dni = dni;
         this.rol = rol;
-        this.listaVentas = listaVentas;
+        this.listSales = listSales;
     }
 
     public int getId() {
@@ -46,20 +50,36 @@ public class Usuario implements Serializable {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getApellido() {
-        return apellido;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public int getDni() {
@@ -79,13 +99,12 @@ public class Usuario implements Serializable {
     }
 
     public List<Venta> getListaVentas() {
-        return listaVentas;
+        return listSales;
     }
 
     public void setListaVentas(List<Venta> listaVentas) {
-        this.listaVentas = listaVentas;
+        this.listSales = listaVentas;
     }
-    
 
     
     

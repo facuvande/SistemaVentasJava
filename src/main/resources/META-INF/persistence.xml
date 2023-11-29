@@ -5,6 +5,8 @@
     <class>com.sistemaventas.logic.Producto</class>
     <class>com.sistemaventas.logic.Rol</class>
     <class>com.sistemaventas.logic.Venta</class>
+    <class>com.sistemaventas.logic.Usuario</class>
+    <class>com.sistemaventas.logic.VentaProducto</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sistema_ventas?serverTimezone=UTC"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
