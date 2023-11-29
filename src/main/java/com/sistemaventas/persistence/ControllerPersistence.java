@@ -23,6 +23,14 @@ public class ControllerPersistence {
     public void addUser(Usuario miUsuario) {
         usuJpa.create(miUsuario);
     }
+
+    public void editUser(Usuario user) {
+        try {
+            usuJpa.edit(user);
+        } catch (Exception ex) {
+            Logger.getLogger(ControllerPersistence.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     public void deleteUserById(int id){
         try {
@@ -32,9 +40,15 @@ public class ControllerPersistence {
         }
     }
     
+    public Usuario getUserById(int id) {
+        return usuJpa.findUsuario(id);
+    }
+
     // Rols
     public List<Rol> getRoles() {
         return rolJpa.findRolEntities();
     }
+
+
 
 }

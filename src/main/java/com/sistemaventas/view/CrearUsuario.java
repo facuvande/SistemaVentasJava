@@ -7,11 +7,11 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 
-public class CrearEmpleado extends javax.swing.JFrame {
+public class CrearUsuario extends javax.swing.JFrame {
 
     Controller control;
     
-    public CrearEmpleado(Controller control) {
+    public CrearUsuario(Controller control) {
         initComponents();
         this.control = control;
     }

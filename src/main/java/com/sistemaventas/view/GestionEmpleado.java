@@ -125,13 +125,25 @@ public class GestionEmpleado extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
-        CrearEmpleado empleadoView = new CrearEmpleado(control);
+        CrearUsuario empleadoView = new CrearUsuario(control);
         empleadoView.setVisible(true);
         empleadoView.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
+        if(tableUsers.getSelectedRow() > -1){
+            int id = Integer.parseInt(String.valueOf(tableUsers.getValueAt(tableUsers.getSelectedRow(), 0)));
+            
+            Usuario myUser = control.getUserById(id);
+            
+            EditarUsuario miEdit = new EditarUsuario(control, myUser);
+            miEdit.setVisible(true);
+            miEdit.setLocationRelativeTo(null);
+            
+            cargarTabla();
+        }else{
+            mostrarMensaje("No has seleccionado ningun usuario", "Error", "Error al editar");
+        }
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed

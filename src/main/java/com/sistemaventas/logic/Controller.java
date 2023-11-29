@@ -25,10 +25,11 @@ public class Controller {
     public List<Usuario> getUsers() {
         return controllerPersis.getUsers();
     }
-
-    public List<Rol> getRoles() {
-        return controllerPersis.getRoles();
+    
+    public Usuario getUserById(int id) {
+        return controllerPersis.getUserById(id);
     }
+
 
     public void addUser(String name, String surname, String dni, String password, String username, String role) {
         Usuario user = new Usuario();
@@ -50,8 +51,24 @@ public class Controller {
         user.setId(id + 1);
         
         controllerPersis.addUser(user);
+    }
+
+    public void editUser(Usuario user, String name, String surname, String dni, String password, String username, String role) {
+        user.setName(name);
+        user.setSurname(surname);
+        user.setDni(dni);
+        user.setPassword(password);
+        user.setUsername(username);
         
-       
+        List<Rol> roles = this.getRoles();
+        
+        for(Rol rol : roles){
+            if(rol.getName().equalsIgnoreCase(role)){
+                user.setRol(rol);
+            }
+        }
+        
+        controllerPersis.editUser(user);
     }
     
     public void deleteUserById(int id){
@@ -65,4 +82,13 @@ public class Controller {
         return usu.getId();
         
     }
+    
+    // ROLES
+
+    public List<Rol> getRoles() {
+        return controllerPersis.getRoles();
+    }
+
+    
+    
 }
