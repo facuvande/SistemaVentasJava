@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.sistemaventas.view;
 
 import com.sistemaventas.logic.Controller;
@@ -9,10 +5,6 @@ import com.sistemaventas.logic.Usuario;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author facun
- */
 public class GestionEmpleado extends javax.swing.JFrame {
 
     Controller control;
@@ -131,7 +123,9 @@ public class GestionEmpleado extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
-        // TODO add your handling code here:
+        CrearEmpleado empleadoView = new CrearEmpleado();
+        empleadoView.setVisible(true);
+        empleadoView.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
