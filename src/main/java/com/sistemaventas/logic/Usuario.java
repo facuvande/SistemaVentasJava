@@ -13,14 +13,14 @@ import javax.persistence.OneToMany;
 @Entity
 public class Usuario implements Serializable {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+//    @GeneratedValue(strategy=GenerationType.AUTO)
 
     private int id;
     private String name;
     private String surname;
     private String username;
     private String password;
-    private int dni;
+    private String dni;
     @ManyToOne
     @JoinColumn(name="fk_rol")
     private Rol rol;
@@ -31,7 +31,7 @@ public class Usuario implements Serializable {
     public Usuario() {
     }
 
-    public Usuario(int id, String name, String surname, String username, String password, int dni, Rol rol, List<Venta> listSales) {
+    public Usuario(int id, String name, String surname, String username, String password, String dni, Rol rol, List<Venta> listSales) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -82,11 +82,11 @@ public class Usuario implements Serializable {
         this.password = password;
     }
 
-    public int getDni() {
+    public String getDni() {
         return dni;
     }
 
-    public void setDni(int dni) {
+    public void setDni(String dni) {
         this.dni = dni;
     }
 

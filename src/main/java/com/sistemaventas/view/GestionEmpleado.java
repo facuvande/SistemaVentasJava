@@ -123,7 +123,7 @@ public class GestionEmpleado extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
-        CrearEmpleado empleadoView = new CrearEmpleado();
+        CrearEmpleado empleadoView = new CrearEmpleado(control);
         empleadoView.setVisible(true);
         empleadoView.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnCreateActionPerformed

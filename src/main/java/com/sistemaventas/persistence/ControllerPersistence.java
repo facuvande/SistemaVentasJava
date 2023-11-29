@@ -1,5 +1,6 @@
 package com.sistemaventas.persistence;
 
+import com.sistemaventas.logic.Rol;
 import com.sistemaventas.logic.Usuario;
 import java.util.List;
 
@@ -11,7 +12,18 @@ public class ControllerPersistence {
     ProductoJpaController produJpa = new ProductoJpaController();
     VentaProductoJpaController ventaProduJpa = new VentaProductoJpaController();
     
+    // Users
     public List<Usuario> getUsers() {
         return usuJpa.findUsuarioEntities();
     }
+
+    public void addUser(Usuario miUsuario) {
+        usuJpa.create(miUsuario);
+    }
+    
+    // Rols
+    public List<Rol> getRoles() {
+        return rolJpa.findRolEntities();
+    }
+
 }

@@ -1,10 +1,17 @@
 package com.sistemaventas.view;
 
+import com.sistemaventas.logic.Controller;
+import com.sistemaventas.logic.Rol;
+import java.util.List;
+
 
 public class CrearEmpleado extends javax.swing.JFrame {
 
-    public CrearEmpleado() {
+    Controller control;
+    
+    public CrearEmpleado(Controller control) {
         initComponents();
+        this.control = control;
     }
 
     
@@ -30,6 +37,11 @@ public class CrearEmpleado extends javax.swing.JFrame {
         btnClean = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(21, 30, 33));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -85,11 +97,15 @@ public class CrearEmpleado extends javax.swing.JFrame {
         jPanel1.add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 260, 300, -1));
 
         cmbRole.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        cmbRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel1.add(cmbRole, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, 110, -1));
 
         btnSave.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         btnSave.setText("Guardar");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 470, 110, 40));
 
         btnClean.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -118,6 +134,27 @@ public class CrearEmpleado extends javax.swing.JFrame {
     private void btnCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanActionPerformed
         cleanForm();
     }//GEN-LAST:event_btnCleanActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        
+        List<Rol> roles = control.getRoles();
+        
+        for(Rol rol : roles){
+            cmbRole.addItem(rol.getName());
+        }
+        
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        String name = txtName.getText();
+        String surname = txtSurname.getText();
+        String dni = txtDni.getText();
+        String password = txtPassword.getText();
+        String user = txtUser.getText();
+        String role = cmbRole.getSelectedItem().toString();
+        
+        control.addUser(name, surname, dni, password, user, role);
+    }//GEN-LAST:event_btnSaveActionPerformed
 
     private void cleanForm(){
         txtName.setText("");
