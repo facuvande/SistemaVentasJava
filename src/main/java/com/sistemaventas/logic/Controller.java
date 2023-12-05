@@ -89,6 +89,37 @@ public class Controller {
         return controllerPersis.getRoles();
     }
 
-    
+    // Products
+
+    public void addProduct(String name, int price, int stock, String barcode) {
+        Producto miProduct = new Producto();
+        miProduct.setName(name);
+        miProduct.setPrice(price);
+        miProduct.setStock(stock);
+        miProduct.setBarcode(barcode);
+        
+        controllerPersis.addProduct(miProduct);
+    }
+
+    public List<Producto> getProducts() {
+        return controllerPersis.getProducts();
+    }
+
+    public void deleteProductById(int id){
+        controllerPersis.deleteProductById(id);
+    }
+
+    public Producto getProductByBarcode(String barcode) {
+        List<Producto> myProducts = this.getProducts();
+        
+        for(Producto product : myProducts){
+            if(product.getBarcode().equalsIgnoreCase(barcode)){
+                return product;
+            }else{
+                return null;
+            }
+        }
+        return null;
+    }
     
 }

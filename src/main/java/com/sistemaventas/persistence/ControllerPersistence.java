@@ -1,5 +1,6 @@
 package com.sistemaventas.persistence;
 
+import com.sistemaventas.logic.Producto;
 import com.sistemaventas.logic.Rol;
 import com.sistemaventas.logic.Usuario;
 import com.sistemaventas.persistence.exceptions.NonexistentEntityException;
@@ -49,6 +50,22 @@ public class ControllerPersistence {
         return rolJpa.findRolEntities();
     }
 
+    // Products
+    public void addProduct(Producto miProduct) {
+        produJpa.create(miProduct);
+    }
+
+    public List<Producto> getProducts() {
+        return produJpa.findProductoEntities();
+    }
+
+    public void deleteProductById(int id) {
+        try {
+            produJpa.destroy(id);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ControllerPersistence.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 
 }
