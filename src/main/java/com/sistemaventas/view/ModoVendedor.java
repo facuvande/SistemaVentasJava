@@ -77,6 +77,7 @@ public class ModoVendedor extends javax.swing.JFrame {
         btnAdd = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
+        txtTotalAmmount = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -195,8 +196,13 @@ public class ModoVendedor extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Total:");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 580, -1, -1));
+        jLabel7.setText("Total: $");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 580, -1, -1));
+
+        txtTotalAmmount.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        txtTotalAmmount.setForeground(new java.awt.Color(255, 255, 255));
+        txtTotalAmmount.setText("0");
+        jPanel1.add(txtTotalAmmount, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 580, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -232,6 +238,11 @@ public class ModoVendedor extends javax.swing.JFrame {
         
         Object[] fila = {miProduct.getId(), miProduct.getBarcode(), miProduct.getName(), txtQuantity.getText() ,miProduct.getPrice(), txtTotalPrice.getText()};
         tableModel.addRow(fila);
+        
+        double totalAmmountOld = Double.parseDouble(txtTotalAmmount.getText());
+        
+        txtTotalAmmount.setText(String.valueOf(totalAmmountOld + Double.parseDouble(txtTotalPrice.getText())));
+        
         cleanForm();
         txtBarcode.setText("");
     }//GEN-LAST:event_btnAddActionPerformed
@@ -331,6 +342,7 @@ public class ModoVendedor extends javax.swing.JFrame {
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPriceUnit;
     private javax.swing.JTextField txtQuantity;
+    private javax.swing.JLabel txtTotalAmmount;
     private javax.swing.JTextField txtTotalPrice;
     // End of variables declaration//GEN-END:variables
 
