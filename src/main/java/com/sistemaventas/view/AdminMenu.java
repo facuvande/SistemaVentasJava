@@ -1,16 +1,17 @@
 package com.sistemaventas.view;
 
 import com.sistemaventas.logic.Controller;
+import com.sistemaventas.logic.Usuario;
 
 public class AdminMenu extends javax.swing.JFrame {
     
     Controller control = null;
-    String userLoged = null; 
+    Usuario userLoged = null; 
     
-    public AdminMenu(String name) {
+    public AdminMenu(Usuario user) {
         initComponents();
         control = new Controller();
-        userLoged = name;
+        userLoged = user;
     }
 
     @SuppressWarnings("unchecked")
@@ -130,7 +131,7 @@ public class AdminMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        txtNameUser.setText("Bienvenid@ " + userLoged);
+        txtNameUser.setText("Bienvenid@ " + userLoged.getName());
     }//GEN-LAST:event_formWindowOpened
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -147,7 +148,7 @@ public class AdminMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        ModoVendedor vistaVendedor = new ModoVendedor(control);
+        ModoVendedor vistaVendedor = new ModoVendedor(control, userLoged);
         vistaVendedor.setVisible(true);
         vistaVendedor.setLocationRelativeTo(null);
     }//GEN-LAST:event_jButton5ActionPerformed

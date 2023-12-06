@@ -22,7 +22,7 @@ public class Pedido implements Serializable {
     
     // Fecha pedido
     private Date date_sale;
-    private int amount_total;
+    private double amount_total;
     private boolean state;
 
     @ManyToOne
@@ -40,7 +40,7 @@ public class Pedido implements Serializable {
     public Pedido() {
     }
 
-    public Pedido(int id_pedido, Date date_sale, int amount_total, boolean state, Usuario vendedor, List<Producto> productos) {
+    public Pedido(int id_pedido, Date date_sale, double amount_total, boolean state, Usuario vendedor, List<Producto> productos) {
         this.id_pedido = id_pedido;
         this.date_sale = date_sale;
         this.amount_total = amount_total;
@@ -65,11 +65,11 @@ public class Pedido implements Serializable {
         this.date_sale = date_sale;
     }
 
-    public int getAmount_total() {
+    public double getAmount_total() {
         return amount_total;
     }
 
-    public void setAmount_total(int amount_total) {
+    public void setAmount_total(double amount_total) {
         this.amount_total = amount_total;
     }
 

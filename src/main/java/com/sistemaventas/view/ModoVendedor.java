@@ -16,10 +16,12 @@ import javax.swing.table.DefaultTableModel;
 public class ModoVendedor extends javax.swing.JFrame {
 
     Controller control;
+    Usuario user = null;
     
-    public ModoVendedor(Controller control) {
+    public ModoVendedor(Controller control, Usuario user) {
         initComponents();
         this.control = control;
+        this.user = user;
         
         txtBarcode.getDocument().addDocumentListener(new DocumentListener(){
             @Override
@@ -256,12 +258,12 @@ public class ModoVendedor extends javax.swing.JFrame {
         
         List<Producto> misProductos = new ArrayList<>();
         
+        double amountTotal = 0;
+        
         // Creamos pedido
         Pedido pedido = new Pedido();
         pedido.setDate_sale(new Date());
-        pedido.setAmount_total(0);
         pedido.setState(true);
-        
         
         for(int i=0; i < tableModel.getRowCount(); i++){
             // Obtenemos valores de cada celda en la fila
@@ -272,13 +274,16 @@ public class ModoVendedor extends javax.swing.JFrame {
             // Traemos el producto
             Producto miProduct = control.getProductByBarcode(barcode);
             misProductos.add(miProduct);
+            amountTotal += (quantity * miProduct.getPrice());
         }
         
-        Usuario vendedor = control.getUserById(1);
+        pedido.setAmount_total(amountTotal);
+        
+        Usuario vendedor = control.getUserById(user.getId());
         pedido.setVendedor(vendedor);
         pedido.setProductos(misProductos);
         control.savePedido(pedido);
-        
+
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void txtBarcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBarcodeActionPerformed
@@ -346,9 +351,16 @@ public class ModoVendedor extends javax.swing.JFrame {
 
             Producto miProduct = control.getProductByBarcode(barcode);
             if(miProduct != null){
-                double priceUnit = miProduct.getPrice();
-                int quantity = Integer.parseInt(txtQuantity.getText());
-                txtTotalPrice.setText(String.valueOf(priceUnit * quantity));
+                if(miProduct.getStock() < Integer.parseInt(txtQuantity.getText())){
+                    String messageError = "No hay suficiente stock del producto, stock disponible:" + String.valueOf(miProduct.getStock());
+                    btnAdd.setEnabled(false);
+                    mostrarMensaje(messageError, "Error", "Error al agregar cantidad");
+                }else{
+                    double priceUnit = miProduct.getPrice();
+                    int quantity = Integer.parseInt(txtQuantity.getText());
+                    txtTotalPrice.setText(String.valueOf(priceUnit * quantity));
+                    btnAdd.setEnabled(true);
+                }
             }
         }
     }
@@ -383,4 +395,5 @@ public class ModoVendedor extends javax.swing.JFrame {
         txtQuantity.setText("");
         txtTotalPrice.setText("");
     }
+    
 }

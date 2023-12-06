@@ -149,7 +149,7 @@ public class Login extends javax.swing.JFrame {
             // Logeado
             // Administrador
             if(user.getRol().getName().equals("admin")){
-                AdminMenu viewAdmin = new AdminMenu(user.getName());
+                AdminMenu viewAdmin = new AdminMenu(user);
                 viewAdmin.setVisible(true);
                 viewAdmin.setLocationRelativeTo(null);
                 this.dispose();
