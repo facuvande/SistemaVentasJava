@@ -1,8 +1,11 @@
 package com.sistemaventas.view;
 
 import com.sistemaventas.logic.Controller;
+import com.sistemaventas.logic.Pedido;
 import com.sistemaventas.logic.Producto;
 import com.sistemaventas.logic.Usuario;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -236,7 +239,7 @@ public class ModoVendedor extends javax.swing.JFrame {
         
         DefaultTableModel tableModel = (DefaultTableModel) tableProducts.getModel();
         
-        Object[] fila = {miProduct.getId(), miProduct.getBarcode(), miProduct.getName(), txtQuantity.getText() ,miProduct.getPrice(), txtTotalPrice.getText()};
+        Object[] fila = {miProduct.getId_producto(), miProduct.getBarcode(), miProduct.getName(), txtQuantity.getText() ,miProduct.getPrice(), txtTotalPrice.getText()};
         tableModel.addRow(fila);
         
         double totalAmmountOld = Double.parseDouble(txtTotalAmmount.getText());
@@ -248,7 +251,34 @@ public class ModoVendedor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        // TODO add your handling code here:
+        // Obtenemos modelo de tabla
+        DefaultTableModel tableModel = (DefaultTableModel) tableProducts.getModel();
+        
+        List<Producto> misProductos = new ArrayList<>();
+        
+        // Creamos pedido
+        Pedido pedido = new Pedido();
+        pedido.setDate_sale(new Date());
+        pedido.setAmount_total(0);
+        pedido.setState(true);
+        
+        
+        for(int i=0; i < tableModel.getRowCount(); i++){
+            // Obtenemos valores de cada celda en la fila
+            int idProducto = (int) tableModel.getValueAt(i, 0);
+            String barcode = (String) tableModel.getValueAt(i, 1);
+            int quantity = Integer.parseInt(tableModel.getValueAt(i, 3).toString());
+            
+            // Traemos el producto
+            Producto miProduct = control.getProductByBarcode(barcode);
+            misProductos.add(miProduct);
+        }
+        
+        Usuario vendedor = control.getUserById(1);
+        pedido.setVendedor(vendedor);
+        pedido.setProductos(misProductos);
+        control.savePedido(pedido);
+        
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void txtBarcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBarcodeActionPerformed
@@ -301,6 +331,7 @@ public class ModoVendedor extends javax.swing.JFrame {
             txtQuantity.requestFocusInWindow();
             btnAdd.setEnabled(true);
         }else{
+            System.out.println("entra");
             btnAdd.setEnabled(false);
             cleanForm();
         }

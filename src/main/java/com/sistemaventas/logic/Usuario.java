@@ -26,12 +26,12 @@ public class Usuario implements Serializable {
     private Rol rol;
     
     @OneToMany(mappedBy="vendedor")
-    private List<Venta> listSales;
+    private List<Pedido> pedidos;
 
     public Usuario() {
     }
 
-    public Usuario(int id, String name, String surname, String username, String password, String dni, Rol rol, List<Venta> listSales) {
+    public Usuario(int id, String name, String surname, String username, String password, String dni, Rol rol, List<Pedido> pedidos) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -39,7 +39,7 @@ public class Usuario implements Serializable {
         this.password = password;
         this.dni = dni;
         this.rol = rol;
-        this.listSales = listSales;
+        this.pedidos = pedidos;
     }
 
     public int getId() {
@@ -98,16 +98,14 @@ public class Usuario implements Serializable {
         this.rol = rol;
     }
 
-    public List<Venta> getListaVentas() {
-        return listSales;
+    public List<Pedido> getPedidos() {
+        return pedidos;
     }
 
-    public void setListaVentas(List<Venta> listaVentas) {
-        this.listSales = listaVentas;
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
     }
 
-    
-    
     
     
 }

@@ -171,7 +171,7 @@ public class ControlStock extends javax.swing.JFrame {
         
         if(listProducts != null){
             for(Producto prod : listProducts){
-                Object[] objeto = {prod.getId(), prod.getName(), prod.getPrice(), prod.getStock(), prod.getBarcode()};
+                Object[] objeto = {prod.getId_producto(), prod.getName(), prod.getPrice(), prod.getStock(), prod.getBarcode()};
                 tableModel.addRow(objeto);
             }
         }

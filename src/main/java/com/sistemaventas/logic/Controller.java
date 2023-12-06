@@ -115,11 +115,15 @@ public class Controller {
         for(Producto product : myProducts){
             if(product.getBarcode().equalsIgnoreCase(barcode)){
                 return product;
-            }else{
-                return null;
             }
         }
         return null;
     }
+
+    public void savePedido(Pedido pedido) {
+        controllerPersis.savePedido(pedido);
+    }
+
+   
     
 }

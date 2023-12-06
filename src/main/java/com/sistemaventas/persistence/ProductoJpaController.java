@@ -4,17 +4,19 @@
  */
 package com.sistemaventas.persistence;
 
+import java.io.Serializable;
+import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import com.sistemaventas.logic.Pedido;
 import com.sistemaventas.logic.Producto;
 import com.sistemaventas.persistence.exceptions.NonexistentEntityException;
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
 /**
  *
@@ -36,11 +38,24 @@ public class ProductoJpaController implements Serializable {
     }
 
     public void create(Producto producto) {
+        if (producto.getPedidos() == null) {
+            producto.setPedidos(new ArrayList<Pedido>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            List<Pedido> attachedPedidos = new ArrayList<Pedido>();
+            for (Pedido pedidosPedidoToAttach : producto.getPedidos()) {
+                pedidosPedidoToAttach = em.getReference(pedidosPedidoToAttach.getClass(), pedidosPedidoToAttach.getId_pedido());
+                attachedPedidos.add(pedidosPedidoToAttach);
+            }
+            producto.setPedidos(attachedPedidos);
             em.persist(producto);
+            for (Pedido pedidosPedido : producto.getPedidos()) {
+                pedidosPedido.getProductos().add(producto);
+                pedidosPedido = em.merge(pedidosPedido);
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -54,12 +69,34 @@ public class ProductoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Producto persistentProducto = em.find(Producto.class, producto.getId_producto());
+            List<Pedido> pedidosOld = persistentProducto.getPedidos();
+            List<Pedido> pedidosNew = producto.getPedidos();
+            List<Pedido> attachedPedidosNew = new ArrayList<Pedido>();
+            for (Pedido pedidosNewPedidoToAttach : pedidosNew) {
+                pedidosNewPedidoToAttach = em.getReference(pedidosNewPedidoToAttach.getClass(), pedidosNewPedidoToAttach.getId_pedido());
+                attachedPedidosNew.add(pedidosNewPedidoToAttach);
+            }
+            pedidosNew = attachedPedidosNew;
+            producto.setPedidos(pedidosNew);
             producto = em.merge(producto);
+            for (Pedido pedidosOldPedido : pedidosOld) {
+                if (!pedidosNew.contains(pedidosOldPedido)) {
+                    pedidosOldPedido.getProductos().remove(producto);
+                    pedidosOldPedido = em.merge(pedidosOldPedido);
+                }
+            }
+            for (Pedido pedidosNewPedido : pedidosNew) {
+                if (!pedidosOld.contains(pedidosNewPedido)) {
+                    pedidosNewPedido.getProductos().add(producto);
+                    pedidosNewPedido = em.merge(pedidosNewPedido);
+                }
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                int id = producto.getId();
+                int id = producto.getId_producto();
                 if (findProducto(id) == null) {
                     throw new NonexistentEntityException("The producto with id " + id + " no longer exists.");
                 }
@@ -80,9 +117,14 @@ public class ProductoJpaController implements Serializable {
             Producto producto;
             try {
                 producto = em.getReference(Producto.class, id);
-                producto.getId();
+                producto.getId_producto();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The producto with id " + id + " no longer exists.", enfe);
+            }
+            List<Pedido> pedidos = producto.getPedidos();
+            for (Pedido pedidosPedido : pedidos) {
+                pedidosPedido.getProductos().remove(producto);
+                pedidosPedido = em.merge(pedidosPedido);
             }
             em.remove(producto);
             em.getTransaction().commit();

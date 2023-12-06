@@ -1,5 +1,6 @@
 package com.sistemaventas.persistence;
 
+import com.sistemaventas.logic.Pedido;
 import com.sistemaventas.logic.Producto;
 import com.sistemaventas.logic.Rol;
 import com.sistemaventas.logic.Usuario;
@@ -12,9 +13,8 @@ import java.util.logging.Logger;
 public class ControllerPersistence {
     UsuarioJpaController usuJpa = new UsuarioJpaController();
     RolJpaController rolJpa = new RolJpaController();
-    VentaJpaController ventaJpa = new VentaJpaController();
+    PedidoJpaController ventaJpa = new PedidoJpaController();
     ProductoJpaController produJpa = new ProductoJpaController();
-    VentaProductoJpaController ventaProduJpa = new VentaProductoJpaController();
     
     // Users
     public List<Usuario> getUsers() {
@@ -22,7 +22,11 @@ public class ControllerPersistence {
     }
 
     public void addUser(Usuario miUsuario) {
-        usuJpa.create(miUsuario);
+        try {
+            usuJpa.create(miUsuario);
+        } catch (Exception ex) {
+            Logger.getLogger(ControllerPersistence.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void editUser(Usuario user) {
@@ -66,6 +70,12 @@ public class ControllerPersistence {
             Logger.getLogger(ControllerPersistence.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public void savePedido(Pedido pedido) {
+        ventaJpa.create(pedido);
+    }
+
+
 
 
 }

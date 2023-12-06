@@ -4,14 +4,15 @@
  */
 package com.sistemaventas.persistence;
 
-import com.sistemaventas.logic.Usuario;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.sistemaventas.logic.Venta;
+import com.sistemaventas.logic.Pedido;
+import com.sistemaventas.logic.Usuario;
 import com.sistemaventas.persistence.exceptions.NonexistentEntityException;
+import com.sistemaventas.persistence.exceptions.PreexistingEntityException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -37,31 +38,36 @@ public class UsuarioJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Usuario usuario) {
-        if (usuario.getListaVentas() == null) {
-            usuario.setListaVentas(new ArrayList<Venta>());
+    public void create(Usuario usuario) throws PreexistingEntityException, Exception {
+        if (usuario.getPedidos() == null) {
+            usuario.setPedidos(new ArrayList<Pedido>());
         }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            List<Venta> attachedListaVentas = new ArrayList<Venta>();
-            for (Venta listaVentasVentaToAttach : usuario.getListaVentas()) {
-                listaVentasVentaToAttach = em.getReference(listaVentasVentaToAttach.getClass(), listaVentasVentaToAttach.getId());
-                attachedListaVentas.add(listaVentasVentaToAttach);
+            List<Pedido> attachedPedidos = new ArrayList<Pedido>();
+            for (Pedido pedidosPedidoToAttach : usuario.getPedidos()) {
+                pedidosPedidoToAttach = em.getReference(pedidosPedidoToAttach.getClass(), pedidosPedidoToAttach.getId_pedido());
+                attachedPedidos.add(pedidosPedidoToAttach);
             }
-            usuario.setListaVentas(attachedListaVentas);
+            usuario.setPedidos(attachedPedidos);
             em.persist(usuario);
-            for (Venta listaVentasVenta : usuario.getListaVentas()) {
-                Usuario oldVendedorOfListaVentasVenta = listaVentasVenta.getVendedor();
-                listaVentasVenta.setVendedor(usuario);
-                listaVentasVenta = em.merge(listaVentasVenta);
-                if (oldVendedorOfListaVentasVenta != null) {
-                    oldVendedorOfListaVentasVenta.getListaVentas().remove(listaVentasVenta);
-                    oldVendedorOfListaVentasVenta = em.merge(oldVendedorOfListaVentasVenta);
+            for (Pedido pedidosPedido : usuario.getPedidos()) {
+                Usuario oldVendedorOfPedidosPedido = pedidosPedido.getVendedor();
+                pedidosPedido.setVendedor(usuario);
+                pedidosPedido = em.merge(pedidosPedido);
+                if (oldVendedorOfPedidosPedido != null) {
+                    oldVendedorOfPedidosPedido.getPedidos().remove(pedidosPedido);
+                    oldVendedorOfPedidosPedido = em.merge(oldVendedorOfPedidosPedido);
                 }
             }
             em.getTransaction().commit();
+        } catch (Exception ex) {
+            if (findUsuario(usuario.getId()) != null) {
+                throw new PreexistingEntityException("Usuario " + usuario + " already exists.", ex);
+            }
+            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -75,30 +81,30 @@ public class UsuarioJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Usuario persistentUsuario = em.find(Usuario.class, usuario.getId());
-            List<Venta> listaVentasOld = persistentUsuario.getListaVentas();
-            List<Venta> listaVentasNew = usuario.getListaVentas();
-            List<Venta> attachedListaVentasNew = new ArrayList<Venta>();
-            for (Venta listaVentasNewVentaToAttach : listaVentasNew) {
-                listaVentasNewVentaToAttach = em.getReference(listaVentasNewVentaToAttach.getClass(), listaVentasNewVentaToAttach.getId());
-                attachedListaVentasNew.add(listaVentasNewVentaToAttach);
+            List<Pedido> pedidosOld = persistentUsuario.getPedidos();
+            List<Pedido> pedidosNew = usuario.getPedidos();
+            List<Pedido> attachedPedidosNew = new ArrayList<Pedido>();
+            for (Pedido pedidosNewPedidoToAttach : pedidosNew) {
+                pedidosNewPedidoToAttach = em.getReference(pedidosNewPedidoToAttach.getClass(), pedidosNewPedidoToAttach.getId_pedido());
+                attachedPedidosNew.add(pedidosNewPedidoToAttach);
             }
-            listaVentasNew = attachedListaVentasNew;
-            usuario.setListaVentas(listaVentasNew);
+            pedidosNew = attachedPedidosNew;
+            usuario.setPedidos(pedidosNew);
             usuario = em.merge(usuario);
-            for (Venta listaVentasOldVenta : listaVentasOld) {
-                if (!listaVentasNew.contains(listaVentasOldVenta)) {
-                    listaVentasOldVenta.setVendedor(null);
-                    listaVentasOldVenta = em.merge(listaVentasOldVenta);
+            for (Pedido pedidosOldPedido : pedidosOld) {
+                if (!pedidosNew.contains(pedidosOldPedido)) {
+                    pedidosOldPedido.setVendedor(null);
+                    pedidosOldPedido = em.merge(pedidosOldPedido);
                 }
             }
-            for (Venta listaVentasNewVenta : listaVentasNew) {
-                if (!listaVentasOld.contains(listaVentasNewVenta)) {
-                    Usuario oldVendedorOfListaVentasNewVenta = listaVentasNewVenta.getVendedor();
-                    listaVentasNewVenta.setVendedor(usuario);
-                    listaVentasNewVenta = em.merge(listaVentasNewVenta);
-                    if (oldVendedorOfListaVentasNewVenta != null && !oldVendedorOfListaVentasNewVenta.equals(usuario)) {
-                        oldVendedorOfListaVentasNewVenta.getListaVentas().remove(listaVentasNewVenta);
-                        oldVendedorOfListaVentasNewVenta = em.merge(oldVendedorOfListaVentasNewVenta);
+            for (Pedido pedidosNewPedido : pedidosNew) {
+                if (!pedidosOld.contains(pedidosNewPedido)) {
+                    Usuario oldVendedorOfPedidosNewPedido = pedidosNewPedido.getVendedor();
+                    pedidosNewPedido.setVendedor(usuario);
+                    pedidosNewPedido = em.merge(pedidosNewPedido);
+                    if (oldVendedorOfPedidosNewPedido != null && !oldVendedorOfPedidosNewPedido.equals(usuario)) {
+                        oldVendedorOfPedidosNewPedido.getPedidos().remove(pedidosNewPedido);
+                        oldVendedorOfPedidosNewPedido = em.merge(oldVendedorOfPedidosNewPedido);
                     }
                 }
             }
@@ -131,10 +137,10 @@ public class UsuarioJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The usuario with id " + id + " no longer exists.", enfe);
             }
-            List<Venta> listaVentas = usuario.getListaVentas();
-            for (Venta listaVentasVenta : listaVentas) {
-                listaVentasVenta.setVendedor(null);
-                listaVentasVenta = em.merge(listaVentasVenta);
+            List<Pedido> pedidos = usuario.getPedidos();
+            for (Pedido pedidosPedido : pedidos) {
+                pedidosPedido.setVendedor(null);
+                pedidosPedido = em.merge(pedidosPedido);
             }
             em.remove(usuario);
             em.getTransaction().commit();
