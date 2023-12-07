@@ -137,11 +137,23 @@ public class ControlStock extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-        
+        return;
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
+        if(tableProducts.getSelectedRow() > -1){
+            int id = Integer.parseInt(String.valueOf(tableProducts.getValueAt(tableProducts.getSelectedRow(), 0)));
+            
+            Producto myProduct = control.getProductById(id);
+            
+            EditarProducto miEdit = new EditarProducto(control, myProduct);
+            miEdit.setVisible(true);
+            miEdit.setLocationRelativeTo(null);
+            
+            cargarTabla();
+        }else{
+            mostrarMensaje("No has seleccionado ningun usuario", "Error", "Error al editar");
+        }
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed

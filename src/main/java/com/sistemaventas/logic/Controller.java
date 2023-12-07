@@ -105,6 +105,19 @@ public class Controller {
         return controllerPersis.getProducts();
     }
 
+    public Producto getProductById(int id) {
+        return controllerPersis.getProductById(id);
+    }
+    
+    public void editProduct(Producto myProduct, String name, double price, int stock, String barcode) {
+        myProduct.setName(name);
+        myProduct.setPrice(price);
+        myProduct.setStock(stock);
+        myProduct.setBarcode(barcode);
+        
+        controllerPersis.editProduct(myProduct);
+    }
+    
     public void deleteProductById(int id){
         controllerPersis.deleteProductById(id);
     }
@@ -123,6 +136,8 @@ public class Controller {
     public void savePedido(Pedido pedido) {
         controllerPersis.savePedido(pedido);
     }
+
+
 
    
     

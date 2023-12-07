@@ -62,6 +62,18 @@ public class ControllerPersistence {
     public List<Producto> getProducts() {
         return produJpa.findProductoEntities();
     }
+    
+    public Producto getProductById(int id) {
+        return produJpa.findProducto(id);
+    }
+    
+    public void editProduct(Producto myProduct) {
+        try {
+            produJpa.edit(myProduct);
+        } catch (Exception ex) {
+            Logger.getLogger(ControllerPersistence.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public void deleteProductById(int id) {
         try {
@@ -71,9 +83,12 @@ public class ControllerPersistence {
         }
     }
 
+    // Pedidos
     public void savePedido(Pedido pedido) {
         ventaJpa.create(pedido);
     }
+
+
 
 
 

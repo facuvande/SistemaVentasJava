@@ -382,6 +382,9 @@ public class ModoVendedor extends javax.swing.JFrame {
         pedido.setProductos(misProductos);
         control.savePedido(pedido);
 
+        
+        mostrarMensaje("Pedido realizado con exito", "Info", "Pedido concretado");
+        cargarTabla();
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void txtBarcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBarcodeActionPerformed
