@@ -237,7 +237,13 @@ public class ModoVendedor extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        // TODO add your handling code here:
+        boolean confirm = mostrarConfirmacion("Quieres cancelar el pedido?");
+        if(confirm){
+            this.dispose();
+            ModoVendedor nuevaVentana = new ModoVendedor(control, user);
+            nuevaVentana.setVisible(true);
+            nuevaVentana.setLocationRelativeTo(null);
+        }
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -342,6 +348,11 @@ public class ModoVendedor extends javax.swing.JFrame {
         dialog.setAlwaysOnTop(true);
         dialog.setVisible(true);
    
+    }
+    
+    public boolean mostrarConfirmacion(String mensaje) {
+        int respuesta = JOptionPane.showConfirmDialog(null, mensaje, "Confirmación", JOptionPane.YES_NO_OPTION);
+        return respuesta == JOptionPane.YES_OPTION;
     }
     
     private void handleBarcondeChange() {
