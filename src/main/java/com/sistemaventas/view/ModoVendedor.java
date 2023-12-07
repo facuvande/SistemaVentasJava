@@ -67,7 +67,7 @@ public class ModoVendedor extends javax.swing.JFrame {
         btnImprimir = new javax.swing.JButton();
         txtQuantity = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnDeleteProduct = new javax.swing.JButton();
         txtTotalPrice = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -116,8 +116,13 @@ public class ModoVendedor extends javax.swing.JFrame {
         jLabel1.setText("Precio total:");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, -1, -1));
 
-        jButton1.setText("Modo Rapido");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 110, 30));
+        btnDeleteProduct.setText("Eliminar Producto");
+        btnDeleteProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteProductActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnDeleteProduct, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 10, 160, 40));
 
         txtTotalPrice.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jPanel1.add(txtTotalPrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 440, 150, 30));
@@ -289,6 +294,23 @@ public class ModoVendedor extends javax.swing.JFrame {
     private void txtBarcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBarcodeActionPerformed
     }//GEN-LAST:event_txtBarcodeActionPerformed
 
+    private void btnDeleteProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteProductActionPerformed
+        if(tableProducts.getSelectedRow() != -1){
+            DefaultTableModel tableModel = (DefaultTableModel) tableProducts.getModel();
+            
+            double totalProduct = Double.parseDouble(tableProducts.getValueAt(tableProducts.getSelectedRow(), 5).toString());
+            double totalAmmountOld = Double.parseDouble(txtTotalAmmount.getText());
+
+            txtTotalAmmount.setText(String.valueOf(totalAmmountOld - totalProduct));
+            
+            tableModel.removeRow(tableProducts.getSelectedRow());
+            
+            tableProducts.setModel(tableModel);
+        }else{
+            mostrarMensaje("No has seleccionado ningun producto de la tabla", "Error", "Error al eliminar producto");
+        }
+    }//GEN-LAST:event_btnDeleteProductActionPerformed
+
     private void cargarTabla() {
         // Definir modelo de la tabla
         DefaultTableModel tableModel = new DefaultTableModel(){
@@ -368,9 +390,9 @@ public class ModoVendedor extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnDeleteProduct;
     private javax.swing.JButton btnImprimir;
     private javax.swing.JButton btnSave;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
