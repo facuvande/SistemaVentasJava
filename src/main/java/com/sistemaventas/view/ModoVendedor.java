@@ -1,12 +1,25 @@
 package com.sistemaventas.view;
 
+import br.com.adilson.util.Extenso;
+import br.com.adilson.util.PrinterMatrix;
 import com.sistemaventas.logic.Controller;
 import com.sistemaventas.logic.Pedido;
 import com.sistemaventas.logic.Producto;
 import com.sistemaventas.logic.Usuario;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.print.Doc;
+import javax.print.DocFlavor;
+import javax.print.DocPrintJob;
+import javax.print.PrintException;
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
+import javax.print.SimpleDoc;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
@@ -83,6 +96,7 @@ public class ModoVendedor extends javax.swing.JFrame {
         btnSave = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         txtTotalAmmount = new javax.swing.JLabel();
+        btnBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -125,6 +139,11 @@ public class ModoVendedor extends javax.swing.JFrame {
         jPanel1.add(btnDeleteProduct, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 10, 160, 40));
 
         txtTotalPrice.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        txtTotalPrice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTotalPriceActionPerformed(evt);
+            }
+        });
         jPanel1.add(txtTotalPrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 440, 150, 30));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
@@ -214,6 +233,16 @@ public class ModoVendedor extends javax.swing.JFrame {
         txtTotalAmmount.setText("0");
         jPanel1.add(txtTotalAmmount, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 580, -1, -1));
 
+        btnBack.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnBack.setForeground(new java.awt.Color(0, 0, 0));
+        btnBack.setText("<");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 50, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -229,7 +258,65 @@ public class ModoVendedor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
-        this.dispose();
+        PrinterMatrix printer = new PrinterMatrix();
+        
+        String numberFacture = "ABC0";        
+        String nameVendedor = user.getName() + user.getSurname();
+        
+        Extenso e = new Extenso();
+        
+        e.setNumber(101.85);
+        
+        printer.setOutSize(40, 32);
+        
+        printer.printCharAtCol(1, 1, 32, "=");
+        printer.printTextWrap(1, 2, 8, 32, "FACTURA DE VENTA");        
+        printer.printTextWrap(2, 3, 1, 32, "Num.Factura: " + numberFacture);
+        printer.printTextWrap(3, 3, 1, 32, "Fecha de Emision: " + new Date().toString());
+        printer.printTextWrap(5, 3, 1, 32, "Vendedor: " + nameVendedor);
+
+        // Agregar los productos al ticket
+        DefaultTableModel tableModel = (DefaultTableModel) tableProducts.getModel();
+        for (int i = 0; i < tableModel.getRowCount(); i++) {
+            String productName = (String) tableModel.getValueAt(i, 2);
+            int quantity = Integer.parseInt(tableModel.getValueAt(i, 3).toString());
+            double priceUnit = Double.parseDouble(tableModel.getValueAt(i, 4).toString());
+            double totalPrice = Double.parseDouble(tableModel.getValueAt(i, 5).toString());
+
+            printer.printTextWrap(7 + i, 3, 1, 32, productName + " x" + String.valueOf(quantity));
+            printer.printTextWrap(8 + i, 3, 1, 32, "  Precio Unitario: $" + String.valueOf(priceUnit));
+            printer.printTextWrap(9 + i, 3, 1, 32, "  Precio Total: $" + String.valueOf(totalPrice));
+        }
+        
+        printer.toFile("impresion.txt");
+        FileInputStream inputStream = null;
+        
+        try{
+            inputStream = new FileInputStream("impresion.txt");
+        }catch(FileNotFoundException ex){
+            ex.printStackTrace();
+        }
+        
+        if(inputStream == null){
+            return;
+        }
+        
+        DocFlavor docFormat = DocFlavor.INPUT_STREAM.AUTOSENSE;
+        Doc document = new SimpleDoc(inputStream, docFormat, null);
+        
+        PrintRequestAttributeSet attributeSet = new HashPrintRequestAttributeSet();
+        PrintService defaultPrintService = PrintServiceLookup.lookupDefaultPrintService();
+        
+        if(defaultPrintService != null){
+            DocPrintJob printJob = defaultPrintService.createPrintJob();
+            try {
+                printJob.print(document, attributeSet);
+            } catch (Exception ex) {
+                System.out.println("Error: " + ex.toString());
+            }
+        }else{
+            System.err.println("No hay una impresora instalada");
+        }
     }//GEN-LAST:event_btnImprimirActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -317,6 +404,14 @@ public class ModoVendedor extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnDeleteProductActionPerformed
 
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void txtTotalPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalPriceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTotalPriceActionPerformed
+
     private void cargarTabla() {
         // Definir modelo de la tabla
         DefaultTableModel tableModel = new DefaultTableModel(){
@@ -400,6 +495,7 @@ public class ModoVendedor extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnDeleteProduct;
     private javax.swing.JButton btnImprimir;

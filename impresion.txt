@@ -1,0 +1,40 @@
+================================
+        FACTURA DE VENTA        
+ Num.Factura: ABC0              
+ Fecha de Emision: Wed Dec 06 21
+ :59:49 ART 2023                
+ Vendedor: FacundoVandecaveye   
+                                
+ Alfajor de maizena x2          
+ Papitas Lays x2                
+   Precio Unitario: $23111.0    
+   Precio Total: $46222.0       
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                

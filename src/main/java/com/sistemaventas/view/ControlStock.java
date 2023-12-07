@@ -29,6 +29,7 @@ public class ControlStock extends javax.swing.JFrame {
         btnEdit = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnReload = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -105,6 +106,16 @@ public class ControlStock extends javax.swing.JFrame {
         });
         jPanel1.add(btnReload, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 320, 190, 50));
 
+        btnBack.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnBack.setForeground(new java.awt.Color(0, 0, 0));
+        btnBack.setText("<");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 50, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -152,6 +163,10 @@ public class ControlStock extends javax.swing.JFrame {
         cargarTabla();
     }//GEN-LAST:event_formWindowOpened
 
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnBackActionPerformed
+
     private void cargarTabla() {
         // Definir modelo de la tabla
         DefaultTableModel tableModel = new DefaultTableModel(){
@@ -196,6 +211,7 @@ public class ControlStock extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnCreate;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
