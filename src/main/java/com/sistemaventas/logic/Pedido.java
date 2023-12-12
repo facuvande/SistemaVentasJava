@@ -1,10 +1,8 @@
 package com.sistemaventas.logic;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -73,7 +71,7 @@ public class Pedido implements Serializable {
         this.amount_total = amount_total;
     }
 
-    public boolean isState() {
+    public boolean getState() {
         return state;
     }
 

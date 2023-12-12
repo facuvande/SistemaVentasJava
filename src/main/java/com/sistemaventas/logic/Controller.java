@@ -133,8 +133,18 @@ public class Controller {
         return null;
     }
 
+    // Pedidos
+    
     public void savePedido(Pedido pedido) {
         controllerPersis.savePedido(pedido);
+    }
+
+    public List<Pedido> getPedidos() {
+        return controllerPersis.getPedidos();
+    }
+
+    public Pedido getPedidosById(int id) {
+        return controllerPersis.getPedidosById(id);
     }
 
 

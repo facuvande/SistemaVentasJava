@@ -21,11 +21,11 @@ public class AdminMenu extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         txtNameUser = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnGestionEmpleados = new javax.swing.JButton();
+        btnControlStock = new javax.swing.JButton();
+        btnHistorialVentas = new javax.swing.JButton();
+        btnExit = new javax.swing.JButton();
+        btnModoVendedor = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -43,38 +43,43 @@ public class AdminMenu extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(21, 30, 33));
         jPanel2.setForeground(new java.awt.Color(255, 255, 255));
 
-        jButton1.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
-        jButton1.setText("Gestion de Empleados");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnGestionEmpleados.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        btnGestionEmpleados.setText("Gestion de Empleados");
+        btnGestionEmpleados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnGestionEmpleadosActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
-        jButton2.setText("Control de Stock");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnControlStock.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        btnControlStock.setText("Control de Stock");
+        btnControlStock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnControlStockActionPerformed(evt);
             }
         });
 
-        jButton3.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
-        jButton3.setText("Historial de Ventas");
-
-        jButton4.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
-        jButton4.setText("Salir");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnHistorialVentas.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        btnHistorialVentas.setText("Historial de Ventas");
+        btnHistorialVentas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnHistorialVentasActionPerformed(evt);
             }
         });
 
-        jButton5.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
-        jButton5.setText("Modo vendedor");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnExit.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        btnExit.setText("Salir");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnExitActionPerformed(evt);
+            }
+        });
+
+        btnModoVendedor.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        btnModoVendedor.setText("Modo vendedor");
+        btnModoVendedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModoVendedorActionPerformed(evt);
             }
         });
 
@@ -85,26 +90,26 @@ public class AdminMenu extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(323, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnModoVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnHistorialVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnControlStock, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGestionEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(314, 314, 314))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(98, 98, 98)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnGestionEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnModoVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnHistorialVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnControlStock, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(52, 52, 52)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(66, Short.MAX_VALUE))
         );
 
@@ -124,42 +129,48 @@ public class AdminMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnGestionEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionEmpleadosActionPerformed
         GestionEmpleado miGestion = new GestionEmpleado(control);
         miGestion.setVisible(true);
         miGestion.setLocationRelativeTo(null);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnGestionEmpleadosActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         txtNameUser.setText("Bienvenid@ " + userLoged.getName());
     }//GEN-LAST:event_formWindowOpened
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         this.dispose();
         Login miLogin = new Login();
         miLogin.setVisible(true);
         miLogin.setLocationRelativeTo(null);
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnExitActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnControlStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlStockActionPerformed
         ControlStock miControlStock = new ControlStock(control);
         miControlStock.setVisible(true);
         miControlStock.setLocationRelativeTo(null);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnControlStockActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btnModoVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModoVendedorActionPerformed
         ModoVendedor vistaVendedor = new ModoVendedor(control, userLoged);
         vistaVendedor.setVisible(true);
         vistaVendedor.setLocationRelativeTo(null);
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_btnModoVendedorActionPerformed
+
+    private void btnHistorialVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialVentasActionPerformed
+        HistorialVentas myView = new HistorialVentas(control);
+        myView.setVisible(true);
+        myView.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnHistorialVentasActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton btnControlStock;
+    private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnGestionEmpleados;
+    private javax.swing.JButton btnHistorialVentas;
+    private javax.swing.JButton btnModoVendedor;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel txtNameUser;

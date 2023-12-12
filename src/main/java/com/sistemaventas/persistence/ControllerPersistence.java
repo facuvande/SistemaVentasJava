@@ -88,9 +88,12 @@ public class ControllerPersistence {
         ventaJpa.create(pedido);
     }
 
+    public List<Pedido> getPedidos() {
+        return ventaJpa.findPedidoEntities();
+    }
 
-
-
-
+    public Pedido getPedidosById(int id) {
+        return ventaJpa.findPedido(id);
+    }
 
 }
