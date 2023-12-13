@@ -81,11 +81,11 @@ public class HistorialVentas extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 938, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE)
         );
 
         pack();
@@ -134,6 +134,21 @@ public class HistorialVentas extends javax.swing.JFrame {
         
         // Cargamos modelo a la tabla
         tableVentas.setModel(tableModel);
+        
+        tableVentas.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt){
+                if(evt.getClickCount() == 2){
+                    // se detecto doble click
+                    int row = tableVentas.rowAtPoint(evt.getPoint());
+                    int idPedido = (int) tableVentas.getValueAt(row, 0);
+                    
+                    VisualizacionPedido miVista = new VisualizacionPedido(control, idPedido);
+                    miVista.setVisible(true);
+                    miVista.setLocationRelativeTo(null);
+                }
+            }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
