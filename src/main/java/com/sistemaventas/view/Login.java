@@ -153,6 +153,12 @@ public class Login extends javax.swing.JFrame {
                 viewAdmin.setVisible(true);
                 viewAdmin.setLocationRelativeTo(null);
                 this.dispose();
+            }else{
+                // Usuario
+                EmpleadoMenu viewEmpleado = new EmpleadoMenu(user);
+                viewEmpleado.setVisible(true);
+                viewEmpleado.setLocationRelativeTo(null);
+                this.dispose();
             }
         }else{
             mostrarMensaje("Usuario o contrasena incorrectos", "Error", "Error al logearse");
